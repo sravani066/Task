@@ -5,6 +5,11 @@ public class Item {
  private String email;
  private String mobile;
 
+    public Item(String  email, String mobile) {
+        this.email = email;
+        this.mobile = mobile;
+    }
+
     public String getEmail() {
         return email;
     }

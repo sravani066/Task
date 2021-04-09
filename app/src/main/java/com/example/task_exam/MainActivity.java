@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText et_mobile;
     private Button btn_btnSubmit;
     private RecyclerView recyclerView;
-    private  ArrayList<Item> usersList = new ArrayList<>();
+    private ArrayList<Item> usersList;
     private MyAdapter adapter;
 
     @Override
@@ -39,8 +39,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
 
         usersList = PreferenceUtils.getUsers(getApplicationContext());
-
-        InitialiseAdapter();
+        if(usersList != null){
+            InitialiseAdapter();
+        }
 
         btn_btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,13 +63,16 @@ public class MainActivity extends AppCompatActivity {
                 String mobile = et_mobile.getText().toString();
                 PreferenceUtils.saveUserData(getApplicationContext(), email, mobile);
 
-                Item item = new Item();
+                /*Item item = new Item();
                 item.setEmail(email);
-                item.setMobile(mobile);
+                item.setMobile(mobile);*/
 
-                usersList.add(item);
+                usersList = new ArrayList<>();
+                usersList.add(new Item(email, mobile));
                 PreferenceUtils.saveUsers(getApplicationContext(),usersList);
                 InitialiseAdapter();
+                et_email.setText("");
+                et_mobile.setText("");
                 //adapter.addAll(usersList);
 
             }
